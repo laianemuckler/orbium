@@ -5,7 +5,7 @@ About the game
 ---------------------------------------
 Orbium is a modern version of the 90's game [Log!cal](http://hol.abime.net/906).
 
-Try the game at [http://bni.github.com/orbium](http://bni.github.com/orbium).
+Try the game at <https://bni.github.io/orbium/>.
 
 The code is JavaScript without external dependencies or frameworks. Rendering is done using HTML5 Canvas.
 
