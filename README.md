@@ -1,19 +1,24 @@
-[Orbium](http://bni.github.com/orbium)
-================================
-
-About the game
----------------------------------------
-Orbium is a modern version of the 90's game [Log!cal](http://hol.abime.net/906).
-
-Try the game at <https://bni.github.io/orbium/>.
-
-The code is JavaScript without external dependencies or frameworks. Rendering is done using HTML5 Canvas.
-
-The game targets both desktop and mobile browsers, and works equally well with mouse as with touch input (swipes). Resolution independence is done by selecting an optimal set of resized graphics.
-
-Orbium has partially completed multiplayer (not playable yet). The game server can be run in Node.js, and uses the same code as the client for running the server side simulation. WebSockets is used for communication.
-
-Licenses
-----------------------------------------
-Source code is licensed under the GNU General Public License, version 2.
-Graphics is licensed under the Creative Commons Attribution-NonCommercial 3.0 Unported License.
+# 🧩 Orbium
+ 
+Fork do jogo [Orbium](https://github.com/bni/orbium) para fins acadêmicos na disciplina de Manutenção de Software.
+ 
+## Sobre o projeto
+ 
+Orbium é uma versão moderna do jogo Log!cal dos anos 90. O objetivo é rotacionar peças no tabuleiro para guiar bolinhas coloridas até seus destinos.
+ 
+Desenvolvido em JavaScript puro, sem dependências externas. Renderização via HTML5 Canvas.
+ 
+## Como rodar
+ 
+Abra o arquivo `index.html` no navegador. 
+ 
+ 
+## Tecnologias
+ 
+- JavaScript
+- HTML5 Canvas
+- CSS
+ 
+## Licença
+ 
+GPL-2.0 — baseado no projeto original de Björn Nilsson.
