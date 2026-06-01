@@ -210,6 +210,7 @@
 
     this.startLevel = function () {
       this.paused = false;
+      this.startTime = Date.now();
       this.lane.injectMarble();
     };
 
@@ -250,6 +251,8 @@
 
       if (complete) {
         this.paused = true;
+        var elapsed = Math.round((Date.now() - this.startTime) / 1000);
+        orbium.menu.saveScore(orbium.machine.levnr, elapsed);
         orbium.menu.showCompl();
       }
     };

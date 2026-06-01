@@ -160,6 +160,7 @@
     orbium.perf = new orbium.Perf();
     orbium.tutorial = new orbium.Tutorial();
     orbium.machine = new orbium.Machine();
+    orbium.menu.updateTheme();
     orbium.machine.nextLevel();
 
     if (orbium.has_touch_screen) {

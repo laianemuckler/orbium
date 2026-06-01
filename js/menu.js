@@ -38,6 +38,7 @@
     var tutorial = null;
     var limits = null;
     var filler0 = null;
+    var theme = null;
 
     var debug = null;
     var logo = null;
@@ -93,6 +94,7 @@
       abob = document.getElementById("abob");
       copy = document.getElementById("copy");
       filler6 = document.getElementById("filler6");
+      
 
       pack = document.getElementById("pack");
       nr = document.getElementById("nr");
@@ -106,6 +108,8 @@
       tutorial = document.getElementById("tutorial");
       limits = document.getElementById("limits");
       filler0 = document.getElementById("filler0");
+      theme = document.getElementById("theme");
+
 
       debug = document.getElementById("debug");
       logo = document.getElementById("logo");
@@ -174,6 +178,7 @@
       tutorial.style.fontSize = "" + fontSize + "px";
       limits.style.fontSize = "" + fontSize + "px";
       filler0.style.fontSize = "" + fontSize + "px";
+      theme.style.fontSize = "" + fontSize + "px";
 
       debug.style.fontSize = "" + fontSize + "px";
       logo.style.fontSize = "" + fontSize + "px";
@@ -221,6 +226,8 @@
       orbium.Util.attachListener(tutorial, "touchstart", function() {orbium.menu.toggleTutorial();});
       orbium.Util.attachListener(limits, "touchstart", function() {orbium.menu.toggleLimits();});
       orbium.Util.attachListener(settb, "touchstart", function() {orbium.menu.settb();});
+      orbium.Util.attachListener(theme, "mousedown", function() {orbium.menu.toggleTheme();});
+      orbium.Util.attachListener(theme, "touchstart", function() {orbium.menu.toggleTheme();});
 
       orbium.Util.attachListener(debug, "touchstart", function() {orbium.menu.debug();});
       orbium.Util.attachListener(reset, "touchstart", function() {orbium.menu.reset();});
@@ -269,6 +276,8 @@
       orbium.Util.attachListener(tutorial, "mousedown", function() {orbium.menu.toggleTutorial();});
       orbium.Util.attachListener(limits, "mousedown", function() {orbium.menu.toggleLimits();});
       orbium.Util.attachListener(settb, "mousedown", function() {orbium.menu.settb();});
+      orbium.Util.attachListener(theme, "mousedown", function() {orbium.menu.toggleTheme();});
+      orbium.Util.attachListener(theme, "touchstart", function() {orbium.menu.toggleTheme();});
 
       orbium.Util.attachListener(debug, "mousedown", function() {orbium.menu.debug();});
       orbium.Util.attachListener(reset, "mousedown", function() {orbium.menu.reset();});
@@ -297,6 +306,7 @@
     };
 
     this.showMain = function () {
+      document.getElementById("pausebtn").style.display = "none";
       menu.style.opacity = "0.8";
       menu.style.filter = "alpha(opacity=80)";
 
@@ -351,6 +361,8 @@
 
       sett.style.visibility = "visible";
       sett.style.top = "30%";
+
+      this.updateTheme();
     };
 
     this.hideSett = function () {
@@ -437,7 +449,16 @@
         orbium.machine.saveLevel(orbium.machine.levnr + 1);
 
         compl.style.top = "35%";
-        comp.innerHTML = "LEVEL COMPLETE!";
+        
+        var scores = this.getScores(orbium.machine.levnr);
+        var scoreText = "BEST TIMES:<br>";
+        if (scores.length === 0) {
+          scoreText += "NONE";
+        } else {
+          scoreText += scores.map(function(s, i) { return (i+1) + ". " + s + "s"; }).join("<br>");
+        }
+        comp.innerHTML = "LEVEL COMPLETE!<br><small>" + scoreText + "</small>";
+
         nextl.innerHTML = "NEXT";
       }
 
@@ -535,12 +556,13 @@
       }
     };
 
-    this.updateLimits = function () {
+      this.updateLimits = function () {
       // If not set set it to true
       var limitsEnabled = orbium.storage.readValue("limits");
       if (limitsEnabled === null) {
         orbium.storage.writeValue("limits", true);
       }
+
 
       // Read again
       limitsEnabled = orbium.storage.readValue("limits");
@@ -554,6 +576,47 @@
         orbium.Machine.timeLimits = false;
       }
     };
+
+       this.saveScore = function (levnr, seconds) {
+      var key = "score_lev_" + levnr;
+      var existing = orbium.storage.readValue(key);
+      var scores = existing ? JSON.parse(existing) : [];
+      scores.push(seconds);
+      scores.sort(function(a, b) { return a - b; });
+      scores = scores.slice(0, 5);
+      orbium.storage.writeValue(key, JSON.stringify(scores));
+    };
+
+    this.getScores = function (levnr) {
+      var key = "score_lev_" + levnr;
+      var existing = orbium.storage.readValue(key);
+      return existing ? JSON.parse(existing) : [];
+    };
+
+    this.updateTheme = function () {
+  var t = orbium.storage.readValue("theme");
+  if (t === null) {
+    orbium.storage.writeValue("theme", "dark");
+    t = "dark";
+  }
+  if (t === "light") {
+    document.body.className = "theme-light";
+    theme.innerHTML = "THEME: LIGHT";
+  } else {
+    document.body.className = "theme-dark";
+    theme.innerHTML = "THEME: DARK";
+  }
+};
+
+this.toggleTheme = function () {
+  var t = orbium.storage.readValue("theme");
+  if (t === "light") {
+    orbium.storage.writeValue("theme", "dark");
+  } else {
+    orbium.storage.writeValue("theme", "light");
+  }
+  this.updateTheme();
+};
 
     this.updateFail = function (msg) {
       fai.innerHTML = msg;
@@ -621,6 +684,7 @@
     };
 
     this.start = function () {
+      document.getElementById("pausebtn").style.display = "block";
       orbium.editor.selected = null;
 
       this.hideMain();
@@ -664,6 +728,7 @@
 
     this.resume = function () {
       this.hideMain();
+      document.getElementById("pausebtn").style.display = "block";
       orbium.machine.paused = false;
       orbium.sign.show();
     };

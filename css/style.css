@@ -1,3 +1,22 @@
+/* THEMES */
+body.theme-light {
+  --menu-bg: #d0d0d0;
+  --menu-text: #222222;
+  --menu-stroke: #333333;
+  --sign-bg: #d0d0d0;
+  --tutorial-bg: #d0d0d0;
+  background-color: #888888;
+}
+
+body.theme-dark {
+  --menu-bg: #111111;
+  --menu-text: #cccccc;
+  --menu-stroke: white;
+  --sign-bg: black;
+  --tutorial-bg: black;
+  background-color: black;
+}
+
 body {
   font-family: sans-serif;
   font-weight: bold;
@@ -23,10 +42,10 @@ body {
 #menu {
   position: absolute;
   visibility: hidden;
-  background-color: black;
+  background-color: var(--menu-bg, black);
   border-radius: 5px;
-  color: #cccccc;
-  -webkit-text-stroke-color: white;
+  color: var(--menu-text, #cccccc);
+  -webkit-text-stroke-color: var(--menu-stroke, white);
   -webkit-text-stroke-width: thin;
   z-index: 16;
 }
@@ -63,4 +82,36 @@ body {
   visibility: hidden;
   color: #cccccc;
   z-index: 20;
+}
+
+body.theme-light #start:hover,
+body.theme-light #select:hover,
+body.theme-light #settings:hover,
+body.theme-light #about:hover,
+body.theme-light #nextl:hover,
+body.theme-light #compb:hover {
+  color: #daa520;
+  text-shadow: 0 0 15px #daa520, 0 0 30px #daa520;
+}
+
+body.theme-dark #start:hover,
+body.theme-dark #select:hover,
+body.theme-dark #settings:hover,
+body.theme-dark #about:hover,
+body.theme-dark #nextl:hover,
+body.theme-dark #compb:hover {
+  color: #e53dfd;
+  text-shadow: 0 0 15px #e53dfd, 0 0 30px #e53dfd;
+}
+
+#pausebtn:hover {
+  color: #ff44aa;
+  border-color: #ff44aa;
+}
+
+#compl small {
+  font-size: 0.4em;
+  display: block;
+  margin-top: 5px;
+  line-height: 1.8em;
 }
